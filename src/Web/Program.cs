@@ -23,6 +23,13 @@ builder.Services.AddScoped<IShortUrlService, ShortUrlService>();
 
 var app = builder.Build();
 
+var options = new DbContextOptionsBuilder<ApplicationDbContext>()
+    .UseInMemoryDatabase("ShortUrl")
+    .Options;
+
+using var context = new ApplicationDbContext(options);
+context.Database.EnsureCreated();
+
 if (app.Environment.IsDevelopment())
 {
     app.UseOpenApi();
